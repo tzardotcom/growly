@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growly — Twój pierwszy mały ogród zaczyna się od jednej rośliny</title>
+  <meta name="description" content="Growly Box daje Ci zdrową roślinę, dobrane akcesoria i proste wskazówki, żeby zacząć bez stresu — nawet jeśli myślisz, że nie masz ręki do kwiatów." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Growly — Twój pierwszy mały ogród zaczyna się od jednej rośliny" />
+  <meta property="og:description" content="Pierwsza roślina i wszystko, czego potrzeba, żeby zacząć bez stresu. Nawet jeśli myślisz, że nie masz ręki do kwiatów." />
+  <meta property="og:image" content="assets/starter-box.png" />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ===== ANNOUNCEMENT BAR — scarcity + social proof (hook: niedobór + dowód społeczny) ===== -->
+  <div class="announce" id="announce">
+    <span class="announce__dot"></span>
+    <p class="announce__text">
+      Pierwsza partia jest limitowana — <strong>tylko 200 Growly Boxów</strong>.
+      Już <strong><span data-counter>1 247</span> osób</strong> czeka na start.
+    </p>
+    <button class="announce__cta js-open-box" data-source="announce">Zajmij miejsce</button>
+    <button class="announce__close" id="announceClose" aria-label="Zamknij pasek">&times;</button>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__logo" aria-label="Growly — strona główna">
+      <span class="nav__leaf">🌱</span> Growly
+    </a>
+    <nav class="nav__links">
+      <a href="#historia">Historia</a>
+      <a href="#box">Co dostajesz</a>
+      <a href="#joanna">Ciocia Joanna</a>
+      <a href="#faq">Pytania</a>
+    </nav>
+    <button class="btn btn--primary nav__cta js-open-box" data-source="nav">Zarezerwuj swój box</button>
+  </header>
+
+  <main id="top">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero__media">
+        <img src="assets/hero-plant.png" alt="Zdrowa roślina w jasnym, spokojnym mieszkaniu o poranku" />
+        <div class="hero__scrim"></div>
+      </div>
+      <div class="hero__inner">
+        <p class="eyebrow">Pierwszy udany kontakt z naturą w domu</p>
+        <h1 class="hero__title">Twój pierwszy mały ogród<br />zaczyna się od <em>jednej rośliny</em>.</h1>
+        <p class="hero__sub">
+          Growly Box daje Ci zdrową roślinę, dobrane akcesoria i proste wskazówki, żeby zacząć
+          bez stresu — <strong>nawet jeśli myślisz, że nie masz ręki do kwiatów</strong>.
+        </p>
+        <div class="hero__actions">
+          <button class="btn btn--primary btn--lg js-open-box" data-source="hero">Chcę swój pierwszy Growly Box</button>
+          <a href="#problem" class="btn btn--ghost btn--lg">Zobacz, jak to działa</a>
+        </div>
+        <div class="hero__proof">
+          <div class="avatars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <p><strong><span data-counter>1 247</span></strong> osób już zapisało się na pierwszą partię</p>
+        </div>
+        <ul class="hero__chips">
+          <li>🪴 Roślina dobrana pod Twoje warunki</li>
+          <li>📋 Instrukcja krok po kroku</li>
+          <li>💬 Wsparcie po ludzku</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== PROBLEM (hook: awersja do straty + lustro klienta) ===== -->
+    <section class="section problem" id="problem">
+      <div class="container container--narrow center">
+        <p class="eyebrow">Znasz to uczucie?</p>
+        <h2 class="quote-big">„Ja nawet kaktusa bym&nbsp;zasuszył”.</h2>
+        <p class="lead">
+          To nie kwestia „ręki do roślin”. To kwestia tego, że nikt Ci nigdy nie pokazał, jak zacząć.
+          Wybór w sklepie przytłacza, instrukcji brak, a jak coś pójdzie nie tak — szukasz losowych
+          porad w internecie i się poddajesz.
+        </p>
+        <ul class="fears">
+          <li><span>😟</span> Nie wiem, <strong>jaką roślinę</strong> wybrać</li>
+          <li><span>💧</span> Boję się, że <strong>ją przeleję</strong> albo zapomnę podlać</li>
+          <li><span>🌥️</span> Nie wiem, czy mam <strong>dość światła</strong></li>
+          <li><span>🥀</span> Już raz mi się <strong>nie udało</strong></li>
+        </ul>
+        <p class="lead lead--accent">
+          Każdy z tych strachów ma proste rozwiązanie. Tylko nikt Ci go dotąd nie podał w jednym pudełku.
+        </p>
+        <button class="btn btn--primary js-open-box" data-source="problem">Pokaż mi rozwiązanie →</button>
+      </div>
+    </section>
+
+    <!-- ===== FOUNDER STORY (hook: storytelling + autentyczność) ===== -->
+    <section class="section story" id="historia">
+      <div class="container story__grid">
+        <div class="story__media">
+          <img src="assets/garden-memory.png" alt="Letni ogród dziadków o złotej godzinie — ławka w cieniu drzewa, kwiaty i owoce" />
+        </div>
+        <div class="story__text">
+          <p class="eyebrow">Skąd wzięło się Growly</p>
+          <h2>Growly wyrosło ze wspomnienia ogrodu.</h2>
+          <p>
+            Ogród dziadków. Lato. Cień drzewa, ławka, porzeczki i czereśnie prosto z krzaka.
+            Piwonie, dalie i róże, które zawsze były częścią domu.
+          </p>
+          <p>
+            Po mamie została mi miłość do roślin. Growly jest sposobem, żeby przekazać ją dalej —
+            <strong>prosto, ciepło i bez botanicznego nadęcia</strong>. Nie chodzi o to, żebyś znał
+            łacińskie nazwy. Chodzi o to, żebyś poczuł kawałek tego spokoju u siebie w domu.
+          </p>
+          <blockquote>
+            Growly nie sprzedaje roślin. Growly daje ludziom pierwszy udany kontakt z naturą w domu.
+          </blockquote>
+          <button class="btn btn--secondary js-open-box" data-source="story">Chcę zacząć ten kontakt</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOLUTION / BOX ===== -->
+    <section class="section solution" id="box">
+      <div class="container solution__grid">
+        <div class="solution__text">
+          <p class="eyebrow">Growly Starter Box</p>
+          <h2>Growly nie daje Ci samej rośliny.<br /><em>Growly daje Ci start.</em></h2>
+          <p class="lead">
+            To nie zwykły zakup rośliny. To Twoja pierwsza, spokojna lekcja opieki nad nią —
+            wszystko, czego potrzebujesz, w jednym pudełku.
+          </p>
+          <ul class="contents">
+            <li><span>🌿</span> Zdrowa, łatwa roślina dla początkujących</li>
+            <li><span>🪴</span> Doniczka lub osłonka</li>
+            <li><span>🟤</span> Odpowiednie podłoże</li>
+            <li><span>🌱</span> Nawóz startowy</li>
+            <li><span>📋</span> Prosta instrukcja pielęgnacji</li>
+            <li><span>📱</span> Kod QR przypisany do Twojej rośliny</li>
+            <li><span>💬</span> Wskazówki od Cioci Joanny</li>
+            <li><span>🔆</span> Opcjonalnie prosty miernik światła</li>
+          </ul>
+          <button class="btn btn--primary btn--lg js-open-box" data-source="box">Chcę swój pierwszy Growly Box</button>
+          <p class="microcopy">Bez ryzyka. Najpierw rezerwujesz miejsce — płacisz dopiero, gdy box będzie gotowy.</p>
+        </div>
+        <div class="solution__media">
+          <img src="assets/starter-box.png" alt="Otwarty Growly Starter Box z rośliną, podłożem, nawozem, instrukcją i kodem QR" />
+          <div class="badge-float">Wszystko w jednym ✔</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COMPARISON (hook: anchoring / kontrast) ===== -->
+    <section class="section compare">
+      <div class="container">
+        <div class="center">
+          <p class="eyebrow">Dlaczego nie po prostu market budowlany?</p>
+          <h2>Roślina z marketu vs Growly Box</h2>
+        </div>
+        <div class="compare__table">
+          <div class="compare__col compare__col--bad">
+            <h3>🛒 Roślina z marketu</h3>
+            <ul>
+              <li>Nie wiesz, czy roślina pasuje do Twojego mieszkania</li>
+              <li>Może być osłabiona, przesuszona albo przelana</li>
+              <li>Sam dobierasz ziemię, nawóz i doniczkę</li>
+              <li>Instrukcje są ogólne albo ich nie ma</li>
+              <li>Gdy coś się dzieje — szukasz losowych porad w sieci</li>
+              <li>Łatwo się zniechęcić po pierwszej porażce</li>
+            </ul>
+          </div>
+          <div class="compare__col compare__col--good">
+            <div class="compare__ribbon">Growly</div>
+            <h3>🌱 Growly Box</h3>
+            <ul>
+              <li>Roślina dobrana pod Twoje warunki i poziom doświadczenia</li>
+              <li>Dostajesz zdrową roślinę przygotowaną do startu</li>
+              <li>Wszystko w jednym boxie — nic nie kompletujesz</li>
+              <li>Prosta instrukcja krok po kroku</li>
+              <li>Skanujesz QR i masz wsparcie dla konkretnej rośliny</li>
+              <li>Growly prowadzi Cię przez pierwszy etap opieki</li>
+            </ul>
+            <button class="btn btn--primary js-open-box" data-source="compare">Wybieram Growly Box</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CIOCIA JOANNA (hook: autorytet + zaufanie) ===== -->
+    <section class="section joanna" id="joanna">
+      <div class="container joanna__grid">
+        <div class="joanna__media">
+          <img src="assets/ciocia-joanna.png" alt="Ciocia Joanna — ciepła, ludzka twarz Growly, trzyma małą roślinę" />
+          <div class="joanna__tag">Ciocia Joanna</div>
+        </div>
+        <div class="joanna__text">
+          <p class="eyebrow">Twój ludzki głos wsparcia</p>
+          <h2>Rośliny tłumaczone po ludzku.</h2>
+          <p>
+            Ciocia Joanna nie jest anonimowym ekspertem ani encyklopedycznym botem. Jest ciepłym,
+            ludzkim głosem, który tłumaczy rośliny <strong>bez oceniania i bez trudnych słów</strong>.
+          </p>
+          <ul class="ticks">
+            <li>Upraszcza pielęgnację</li>
+            <li>Tłumaczy, nie ocenia</li>
+            <li>Daje praktyczne rady</li>
+            <li>Uspokaja, gdy roślina „coś robi”</li>
+          </ul>
+          <p class="signature">— „Nie ma roślin nie do uratowania. Są tylko rośliny, którym nikt nie wytłumaczył, czego im trzeba.”</p>
+          <button class="btn btn--secondary js-open-box" data-source="joanna">Chcę mieć Ciocię Joannę po swojej stronie</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS (hook: redukcja tarcia) ===== -->
+    <section class="section steps">
+      <div class="container">
+        <div class="center">
+          <p class="eyebrow">Prościej się nie da</p>
+          <h2>Trzy kroki do pierwszej rośliny, której nie zasuszysz</h2>
+        </div>
+        <div class="steps__grid">
+          <div class="step">
+            <div class="step__num">1</div>
+            <h3>Rezerwujesz box</h3>
+            <p>Zostawiasz e-mail i zajmujesz miejsce w pierwszej, limitowanej partii.</p>
+          </div>
+          <div class="step">
+            <div class="step__num">2</div>
+            <h3>Dostajesz wszystko gotowe</h3>
+            <p>Zdrowa roślina, podłoże, nawóz, instrukcja i QR — w jednym pudełku pod drzwiami.</p>
+          </div>
+          <div class="step">
+            <div class="step__num">3</div>
+            <h3>Rośniecie razem</h3>
+            <p>Skanujesz QR, dostajesz wsparcie krok po kroku i przeżywasz pierwszy sukces.</p>
+          </div>
+        </div>
+        <div class="center">
+          <button class="btn btn--primary btn--lg js-open-box" data-source="steps">Zaczynam od kroku 1</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TRUST / LOGISTICS ===== -->
+    <section class="section trust">
+      <div class="container container--narrow center">
+        <p class="eyebrow">Rośliny są żywe — i tak je traktujemy</p>
+        <h2>Twoja roślina dojedzie w dobrej kondycji.</h2>
+        <p class="lead">
+          W zależności od pory roku zabezpieczamy boxy przed chłodem lub przegrzaniem,
+          chronimy przed przesuszeniem i uszkodzeniem w transporcie. Bo pierwsza roślina,
+          która dotarła zmarznięta, to ostatnia roślina, jaką ktoś zamawia.
+        </p>
+        <div class="trust__row">
+          <div class="trust__item"><span>❄️</span> Ochrona przed chłodem zimą</div>
+          <div class="trust__item"><span>☀️</span> Chłodzenie latem</div>
+          <div class="trust__item"><span>📦</span> Zabezpieczenie w transporcie</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FUTURE TEASER (hook: FOMO / wizja) ===== -->
+    <section class="section future">
+      <div class="container">
+        <div class="center">
+          <p class="eyebrow">To dopiero początek</p>
+          <h2>Growly rośnie razem z Tobą</h2>
+          <p class="lead lead--center">
+            Pierwszy box to start. Osoby z pierwszej partii będą pierwsze przy każdym kolejnym kroku.
+          </p>
+        </div>
+        <div class="future__grid">
+          <div class="future__card">
+            <span class="future__icon">📱</span>
+            <h3>Strona Twojej rośliny</h3>
+            <p>Skanujesz QR z doniczki: podlewanie, światło, typowe problemy, kiedy przesadzić.</p>
+          </div>
+          <div class="future__card">
+            <span class="future__icon">🤖</span>
+            <h3>Diagnoza po zdjęciu</h3>
+            <p>Pokazujesz roślinę, Growly podpowiada, co się dzieje i co zrobić. <em>Wkrótce.</em></p>
+          </div>
+          <div class="future__card">
+            <span class="future__icon">🪟</span>
+            <h3>AI projektant zieleni</h3>
+            <p>Zdjęcie parapetu czy balkonu — a Growly proponuje, co i gdzie postawić. <em>Wkrótce.</em></p>
+          </div>
+        </div>
+        <div class="center">
+          <button class="btn btn--secondary js-open-box" data-source="future">Chcę być pierwszy/a</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WALL OF VOICES (hook: dowód społeczny przez wspólny problem) ===== -->
+    <section class="section voices">
+      <div class="container">
+        <div class="center">
+          <p class="eyebrow">Nie jesteś sam/a</p>
+          <h2>To mówią osoby, które zapisały się na listę</h2>
+        </div>
+        <div class="voices__grid">
+          <figure class="voice"><blockquote>„Mam trzy uschnięte doniczki na sumieniu. Może czas, żeby ktoś mi w końcu wytłumaczył.”</blockquote><figcaption>— Ania, Warszawa</figcaption></figure>
+          <figure class="voice"><blockquote>„Chcę zieleni w domu, ale za każdym razem coś robię nie tak. Pomysł z gotowym boxem brzmi jak dla mnie.”</blockquote><figcaption>— Marek, Kraków</figcaption></figure>
+          <figure class="voice"><blockquote>„Najbardziej podoba mi się, że nie muszę nic kompletować. Jedna roślina, jeden box, jasna instrukcja.”</blockquote><figcaption>— Kasia, Gdańsk</figcaption></figure>
+        </div>
+        <p class="voices__note">Cytaty pochodzą z odpowiedzi osób zapisujących się na listę oczekujących Growly.</p>
+        <div class="center">
+          <button class="btn btn--primary js-open-box" data-source="voices">Dołączam do listy</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section faq" id="faq">
+      <div class="container container--narrow">
+        <div class="center">
+          <p class="eyebrow">Zanim zapytasz</p>
+          <h2>Najczęstsze pytania</h2>
+        </div>
+        <div class="faq__list">
+          <details class="faq__item">
+            <summary>Naprawdę nie mam ręki do roślin. To dla mnie?</summary>
+            <p>Właśnie dla Ciebie. Growly Box jest pomyślany od zera dla osób, którym wcześniej się nie udało. Dostajesz łatwą roślinę i prowadzenie krok po kroku.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Czy muszę teraz płacić?</summary>
+            <p>Nie. Teraz tylko rezerwujesz miejsce w pierwszej partii i zostawiasz e-mail. Damy Ci znać, zanim wystartujemy — decyzję o zakupie podejmiesz później.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Jaką roślinę dostanę?</summary>
+            <p>Zdrową, łatwą roślinę dobraną pod warunki w Twoim domu i Twój poziom doświadczenia. Bez zgadywania w markecie.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Co, jeśli roślina zacznie „coś robić”?</summary>
+            <p>Skanujesz QR z doniczki i dostajesz wsparcie dla konkretnej rośliny. A Ciocia Joanna tłumaczy wszystko po ludzku.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Kiedy startujecie?</summary>
+            <p>Pierwsza partia jest limitowana i przygotowujemy ją ręcznie. Osoby z listy dostaną informację jako pierwsze — i jako pierwsze będą mogły zamówić.</p>
+          </details>
+        </div>
+        <div class="center">
+          <button class="btn btn--primary js-open-box" data-source="faq">Mam pytania mniej — rezerwuję box</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FINAL CTA (fake-door) ===== -->
+    <section class="section final">
+      <div class="container container--narrow center">
+        <p class="eyebrow">Pierwsze Growly Boxy jeszcze rosną 🌱</p>
+        <h2 class="final__title">Zacznij swój pierwszy mały ogród.</h2>
+        <p class="lead lead--center">
+          Zostaw e-mail i zajmij miejsce w pierwszej, limitowanej partii.
+          Damy Ci znać, kiedy wystartujemy — bez spamu, tylko konkret.
+        </p>
+        <button class="btn btn--primary btn--xl js-open-box" data-source="final">Powiadom mnie o starcie</button>
+        <p class="microcopy">Dołącz do <strong><span data-counter>1 247</span></strong> osób, które już czekają.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div>
+        <a href="#top" class="nav__logo nav__logo--footer"><span class="nav__leaf">🌱</span> Growly</a>
+        <p class="footer__tag">Pierwszy udany kontakt z naturą w domu.</p>
+      </div>
+      <div class="footer__cta">
+        <p>Nie przegap startu pierwszej partii.</p>
+        <button class="btn btn--primary js-open-box" data-source="footer">Zarezerwuj swój box</button>
+      </div>
+    </div>
+    <p class="footer__copy">© <span id="year"></span> Growly · Rośliny tłumaczone po ludzku.</p>
+  </footer>
+
+  <!-- ===== FLOATING CTA (pojawia się przy scrollu) ===== -->
+  <button class="floating-cta js-open-box" data-source="floating" id="floatingCta">
+    🌱 Zarezerwuj box
+  </button>
+
+  <!-- ===== MOBILE STICKY BAR ===== -->
+  <div class="mobilebar">
+    <div class="mobilebar__text">
+      <strong>Pierwsza partia: 200 boxów</strong>
+      <span><span data-counter>1 247</span> osób już czeka</span>
+    </div>
+    <button class="btn btn--primary js-open-box" data-source="mobilebar">Zajmij miejsce</button>
+  </div>
+
+  <!-- ===== BOX MODAL (fake-door flow) ===== -->
+  <div class="modal" id="boxModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal__close" data-close-modal aria-label="Zamknij">&times;</button>
+
+      <!-- STEP 1: email capture -->
+      <div class="modal__step" data-step="1">
+        <div class="modal__art">🌱</div>
+        <p class="eyebrow eyebrow--center">Pierwsze Growly Boxy jeszcze rosną</p>
+        <h3 id="modalTitle">Zajmij miejsce w pierwszej partii</h3>
+        <p class="modal__lead">Zostaw e-mail, a damy Ci znać jako pierwszemu/pierwszej, kiedy wystartujemy. Bez zobowiązań, bez płatności teraz.</p>
+        <form id="boxForm" novalidate>
+          <div class="field">
+            <input type="email" id="emailInput" name="email" placeholder="Twój e-mail" autocomplete="email" required />
+            <span class="field__error" id="emailError">Podaj poprawny adres e-mail.</span>
+          </div>
+          <!-- honeypot (ukryte pole antyspamowe — ludzie go nie widzą) -->
+          <div class="hp" aria-hidden="true">
+            <label>Nie wypełniaj tego pola
+              <input type="text" id="hpInput" name="website" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+          <button type="submit" class="btn btn--primary btn--block btn--lg" id="boxSubmit">Zarezerwuj miejsce</button>
+        </form>
+        <p class="modal__trust">🔒 Zero spamu. Jeden e-mail, gdy ruszamy. <strong><span data-counter>1 247</span></strong> osób już w kolejce.</p>
+      </div>
+
+      <!-- STEP 2: research question -->
+      <div class="modal__step" data-step="2" hidden>
+        <div class="modal__art">💚</div>
+        <h3>Dziękujemy! Growly jeszcze rośnie 🌱</h3>
+        <p class="modal__lead">Jesteś na liście. Jedno krótkie pytanie pomoże nam przygotować box idealnie dla Ciebie:</p>
+        <p class="modal__q"><strong>Co najbardziej powstrzymuje Cię przed posiadaniem roślin w domu?</strong></p>
+        <form id="questionForm" class="qopts">
+          <label><input type="radio" name="reason" value="wybor" /> Nie wiem, jaką roślinę wybrać</label>
+          <label><input type="radio" name="reason" value="zmarnuje" /> Boję się, że ją zmarnuję</label>
+          <label><input type="radio" name="reason" value="podlewanie" /> Nie wiem, jak podlewać</label>
+          <label><input type="radio" name="reason" value="swiatlo" /> Mam za mało światła</label>
+          <label><input type="radio" name="reason" value="czas" /> Nie mam czasu</label>
+          <label><input type="radio" name="reason" value="zle_doswiadczenia" /> Miałem/miałam złe doświadczenia</label>
+          <label><input type="radio" name="reason" value="inne" /> Coś innego</label>
+          <button type="submit" class="btn btn--primary btn--block">Wyślij i odbierz miejsce w kolejce</button>
+          <button type="button" class="btn btn--text btn--block" data-skip-question>Pomiń</button>
+        </form>
+      </div>
+
+      <!-- STEP 3: referral loop -->
+      <div class="modal__step" data-step="3" hidden>
+        <div class="modal__art">🎉</div>
+        <h3>Gotowe — jesteś w pierwszej partii!</h3>
+        <p class="modal__lead">Twoje miejsce w kolejce: <strong class="queue-pos" id="queuePos">#1248</strong></p>
+        <div class="referral">
+          <p class="referral__hook">Znasz kogoś, kto „nawet kaktusa by zasuszył”? <strong>Podaj dalej i przeskocz wyżej w kolejce</strong> — pierwsze boxy trafią do najwyższych miejsc.</p>
+          <div class="referral__btns">
+            <button class="btn btn--secondary btn--sm" data-share="wa">Wyślij na WhatsApp</button>
+            <button class="btn btn--secondary btn--sm" data-share="fb">Udostępnij</button>
+            <button class="btn btn--secondary btn--sm" data-share="copy">Skopiuj link</button>
+          </div>
+          <p class="referral__copied" id="referralCopied" hidden>Skopiowano link 💚</p>
+        </div>
+        <button type="button" class="btn btn--text btn--block" data-close-modal>Wrócę do strony</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== EXIT INTENT MODAL ===== -->
+  <div class="modal modal--exit" id="exitModal" aria-hidden="true">
+    <div class="modal__backdrop" data-close-exit></div>
+    <div class="modal__card modal__card--exit" role="dialog" aria-modal="true">
+      <button class="modal__close" data-close-exit aria-label="Zamknij">&times;</button>
+      <div class="modal__art">🌿</div>
+      <h3>Zanim pójdziesz…</h3>
+      <p class="modal__lead">Pierwsza partia to tylko 200 boxów. Zostaw e-mail, a zatrzymamy dla Ciebie miejsce — zero zobowiązań.</p>
+      <button class="btn btn--primary btn--block btn--lg js-open-box" data-source="exit" data-close-exit>Zatrzymaj moje miejsce</button>
+      <button type="button" class="btn btn--text btn--block" data-close-exit>Nie teraz</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
