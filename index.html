@@ -12,6 +12,10 @@
   <meta property="og:image" content="assets/starter-box.png" />
   <meta property="og:type" content="website" />
 
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="assets/favicon.png" type="image/png" sizes="32x32" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -19,12 +23,13 @@
 </head>
 <body>
 
-  <!-- ===== ANNOUNCEMENT BAR — scarcity + social proof (hook: niedobór + dowód społeczny) ===== -->
+  <a class="skip-link" href="#top">Przejdź do treści</a>
+
+  <!-- ===== ANNOUNCEMENT BAR — social proof (bez blokującej presji niedoboru) ===== -->
   <div class="announce" id="announce">
-    <span class="announce__dot"></span>
+    <span class="announce__dot" aria-hidden="true"></span>
     <p class="announce__text">
-      Pierwsza partia jest limitowana — <strong>tylko 200 Growly Boxów</strong>.
-      Już <strong><span data-counter>1 247</span> osób</strong> czeka na start.
+      <strong><span data-counter>120</span> osób</strong> już czeka na start Growly — dołącz do listy oczekujących.
     </p>
     <button class="announce__cta js-open-box" data-source="announce">Zajmij miejsce</button>
     <button class="announce__close" id="announceClose" aria-label="Zamknij pasek">&times;</button>
@@ -65,9 +70,12 @@
         </div>
         <div class="hero__proof">
           <div class="avatars" aria-hidden="true">
-            <span></span><span></span><span></span><span></span>
+            <img src="assets/avatars/avatar-1.png" alt="" width="34" height="34" />
+            <img src="assets/avatars/avatar-2.png" alt="" width="34" height="34" />
+            <img src="assets/avatars/avatar-3.png" alt="" width="34" height="34" />
+            <img src="assets/avatars/avatar-4.png" alt="" width="34" height="34" />
           </div>
-          <p><strong><span data-counter>1 247</span></strong> osób już zapisało się na pierwszą partię</p>
+          <p><strong><span data-counter>120</span></strong> osób już czeka na start Growly</p>
         </div>
         <ul class="hero__chips">
           <li>🪴 Roślina dobrana pod Twoje warunki</li>
@@ -88,10 +96,22 @@
           porad w internecie i się poddajesz.
         </p>
         <ul class="fears">
-          <li><span>😟</span> Nie wiem, <strong>jaką roślinę</strong> wybrać</li>
-          <li><span>💧</span> Boję się, że <strong>ją przeleję</strong> albo zapomnę podlać</li>
-          <li><span>🌥️</span> Nie wiem, czy mam <strong>dość światła</strong></li>
-          <li><span>🥀</span> Już raz mi się <strong>nie udało</strong></li>
+          <li class="fear-card">
+            <span class="fear-card__icon" aria-hidden="true">😟</span>
+            <p class="fear-card__text">Nie wiem, <strong>jaką roślinę</strong> wybrać</p>
+          </li>
+          <li class="fear-card">
+            <span class="fear-card__icon" aria-hidden="true">💧</span>
+            <p class="fear-card__text">Boję się, że <strong>ją przeleję</strong> albo zapomnę podlać</p>
+          </li>
+          <li class="fear-card">
+            <span class="fear-card__icon" aria-hidden="true">🌥️</span>
+            <p class="fear-card__text">Nie wiem, czy mam <strong>dość światła</strong></p>
+          </li>
+          <li class="fear-card">
+            <span class="fear-card__icon" aria-hidden="true">🥀</span>
+            <p class="fear-card__text">Już raz mi się <strong>nie udało</strong></p>
+          </li>
         </ul>
         <p class="lead lead--accent">
           Każdy z tych strachów ma proste rozwiązanie. Tylko nikt Ci go dotąd nie podał w jednym pudełku.
@@ -104,7 +124,7 @@
     <section class="section story" id="historia">
       <div class="container story__grid">
         <div class="story__media">
-          <img src="assets/garden-memory.png" alt="Letni ogród dziadków o złotej godzinie — ławka w cieniu drzewa, kwiaty i owoce" />
+          <img src="assets/founder-books.png" alt="Założyciel Growly w domowym kąciku z książkami — spokojna, osobista chwila inspiracji" />
         </div>
         <div class="story__text">
           <p class="eyebrow">Skąd wzięło się Growly</p>
@@ -196,7 +216,7 @@
     <section class="section joanna" id="joanna">
       <div class="container joanna__grid">
         <div class="joanna__media">
-          <img src="assets/ciocia-joanna.png" alt="Ciocia Joanna — ciepła, ludzka twarz Growly, trzyma małą roślinę" />
+          <img src="assets/ciocia-joanna-rod.png" alt="Ciocia Joanna — około 80-letnia kobieta na typowej polskiej działce ROD przy drewnianym domku" />
           <div class="joanna__tag">Ciocia Joanna</div>
         </div>
         <div class="joanna__text">
@@ -363,7 +383,7 @@
           Damy Ci znać, kiedy wystartujemy — bez spamu, tylko konkret.
         </p>
         <button class="btn btn--primary btn--xl js-open-box" data-source="final">Powiadom mnie o starcie</button>
-        <p class="microcopy">Dołącz do <strong><span data-counter>1 247</span></strong> osób, które już czekają.</p>
+        <p class="microcopy">Dołącz do <strong><span data-counter>120</span></strong> osób, które już czekają.</p>
       </div>
     </section>
   </main>
@@ -391,8 +411,8 @@
   <!-- ===== MOBILE STICKY BAR ===== -->
   <div class="mobilebar">
     <div class="mobilebar__text">
-      <strong>Pierwsza partia: 200 boxów</strong>
-      <span><span data-counter>1 247</span> osób już czeka</span>
+      <strong><span data-counter>120</span> osób już czeka</strong>
+      <span>Dołącz do listy oczekujących</span>
     </div>
     <button class="btn btn--primary js-open-box" data-source="mobilebar">Zajmij miejsce</button>
   </div>
@@ -411,8 +431,9 @@
         <p class="modal__lead">Zostaw e-mail, a damy Ci znać jako pierwszemu/pierwszej, kiedy wystartujemy. Bez zobowiązań, bez płatności teraz.</p>
         <form id="boxForm" novalidate>
           <div class="field">
-            <input type="email" id="emailInput" name="email" placeholder="Twój e-mail" autocomplete="email" required />
-            <span class="field__error" id="emailError">Podaj poprawny adres e-mail.</span>
+            <label class="visually-hidden" for="emailInput">Adres e-mail</label>
+            <input type="email" id="emailInput" name="email" placeholder="Twój e-mail" autocomplete="email" required aria-describedby="emailError" />
+            <span class="field__error" id="emailError" role="alert">Podaj poprawny adres e-mail.</span>
           </div>
           <!-- honeypot (ukryte pole antyspamowe — ludzie go nie widzą) -->
           <div class="hp" aria-hidden="true">
@@ -422,7 +443,7 @@
           </div>
           <button type="submit" class="btn btn--primary btn--block btn--lg" id="boxSubmit">Zarezerwuj miejsce</button>
         </form>
-        <p class="modal__trust">🔒 Zero spamu. Jeden e-mail, gdy ruszamy. <strong><span data-counter>1 247</span></strong> osób już w kolejce.</p>
+        <p class="modal__trust">🔒 Zero spamu. Jeden e-mail, gdy ruszamy. <strong><span data-counter>120</span></strong> osób już na liście oczekujących.</p>
       </div>
 
       <!-- STEP 2: research question -->
@@ -448,7 +469,7 @@
       <div class="modal__step" data-step="3" hidden>
         <div class="modal__art">🎉</div>
         <h3>Gotowe — jesteś w pierwszej partii!</h3>
-        <p class="modal__lead">Twoje miejsce w kolejce: <strong class="queue-pos" id="queuePos">#1248</strong></p>
+        <p class="modal__lead">Twoje miejsce w kolejce: <strong class="queue-pos" id="queuePos">#121</strong></p>
         <div class="referral">
           <p class="referral__hook">Znasz kogoś, kto „nawet kaktusa by zasuszył”? <strong>Podaj dalej i przeskocz wyżej w kolejce</strong> — pierwsze boxy trafią do najwyższych miejsc.</p>
           <div class="referral__btns">
@@ -467,11 +488,11 @@
   <!-- ===== EXIT INTENT MODAL ===== -->
   <div class="modal modal--exit" id="exitModal" aria-hidden="true">
     <div class="modal__backdrop" data-close-exit></div>
-    <div class="modal__card modal__card--exit" role="dialog" aria-modal="true">
+    <div class="modal__card modal__card--exit" role="dialog" aria-modal="true" aria-labelledby="exitModalTitle">
       <button class="modal__close" data-close-exit aria-label="Zamknij">&times;</button>
-      <div class="modal__art">🌿</div>
-      <h3>Zanim pójdziesz…</h3>
-      <p class="modal__lead">Pierwsza partia to tylko 200 boxów. Zostaw e-mail, a zatrzymamy dla Ciebie miejsce — zero zobowiązań.</p>
+      <div class="modal__art" aria-hidden="true">🌿</div>
+      <h3 id="exitModalTitle">Zanim pójdziesz…</h3>
+      <p class="modal__lead">Zostaw e-mail, a damy Ci znać o starcie — zero zobowiązań, dołącz do osób, które już czekają.</p>
       <button class="btn btn--primary btn--block btn--lg js-open-box" data-source="exit" data-close-exit>Zatrzymaj moje miejsce</button>
       <button type="button" class="btn btn--text btn--block" data-close-exit>Nie teraz</button>
     </div>

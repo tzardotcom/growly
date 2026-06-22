@@ -23,11 +23,18 @@
   var SIGNUP_ENDPOINT = window.GROWLY_SIGNUP_URL ||
     'https://xxlnwijfmuwahvtvkxge.supabase.co/functions/v1/growly-signup';
 
-  var WAITLIST_BASE = 1247;
+  var WAITLIST_BASE = 120;
 
   /* ---------- Helpers ---------- */
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $all(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+
+  function getFocusable(container) {
+    return $all(
+      'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      container
+    ).filter(function (el) { return el.offsetParent !== null || el === document.activeElement; });
+  }
 
   /* =========================================================
      ANIMATED COUNTERS (social proof)
@@ -35,9 +42,7 @@
   function getWaitlistCount() {
     var stored = parseInt(localStorage.getItem('growly_waitlist') || '0', 10);
     var joined = localStorage.getItem('growly_joined') === '1' ? 1 : 0;
-    // lekki, stabilny przyrost w czasie, żeby liczba "żyła"
-    var drift = Math.floor((Date.now() / 1000 / 3600) % 53);
-    return WAITLIST_BASE + drift + (stored || 0) + joined;
+    return WAITLIST_BASE + (stored || 0) + joined;
   }
   function renderCounters() {
     var n = getWaitlistCount();
@@ -52,9 +57,28 @@
   var boxModal = $('#boxModal');
   var exitModal = $('#exitModal');
   var lastSource = 'unknown';
+  var lastFocused = null;
+
+  function trapFocus(modal) {
+    var card = $('.modal__card', modal);
+    if (!card) return;
+    var focusables = getFocusable(card);
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    card.addEventListener('keydown', function onKey(e) {
+      if (e.key !== 'Tab') return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
+  }
 
   function openBox(source) {
     lastSource = source || 'unknown';
+    lastFocused = document.activeElement;
     resetModalSteps();
     boxModal.classList.add('is-open');
     boxModal.setAttribute('aria-hidden', 'false');
@@ -67,6 +91,7 @@
     boxModal.classList.remove('is-open');
     boxModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
   }
   function resetModalSteps() {
     showStep(1);
@@ -270,6 +295,8 @@
   /* =========================================================
      INIT
      ========================================================= */
+  trapFocus(boxModal);
+  trapFocus(exitModal);
   renderCounters();
   var yearEl = $('#year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();

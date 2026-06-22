@@ -1,5 +1,7 @@
 # Growly — Landing Page (Fake-door MVP)
 
+**Produkcja:** https://getgrowly.pl
+
 Statyczny landing page testujący zainteresowanie **Growly Starter Boxem** (G-001 + G-002 z `backlog.md`).
 
 Cel: ciepła, emocjonalna narracja + konkret produktu, która **konwertuje na zapis e-mail**. Box (formularz rezerwacji) można otworzyć z **każdej sekcji strony** oraz z pasków sticky, floating CTA i exit-intent.
@@ -25,8 +27,7 @@ python3 -m http.server 4321
 
 ## Hooki sprzedażowe i pętle (ukryte, ale obecne)
 
-- **Niedobór / pilność** — „pierwsza partia: tylko 200 boxów" (pasek + mobile bar).
-- **Dowód społeczny** — licznik osób na liście (animowany, lekko rośnie w czasie).
+- **Dowód społeczny** — licznik osób na liście oczekujących (bazowo 120).
 - **Awersja do straty** — sekcja problemu („Ja nawet kaktusa bym zasuszył").
 - **Anchoring / kontrast** — porównanie market vs Growly Box.
 - **Autorytet / zaufanie** — Ciocia Joanna, sekcja logistyki żywych roślin.
@@ -72,7 +73,7 @@ nie ma ich w tej statycznej stronie.
 2. **Deploy funkcji**: `supabase functions deploy growly-signup`.
 3. **Sekrety funkcji** (`supabase secrets set ...`):
    - `RESEND_API_KEY` — klucz Resend,
-   - `GROWLY_EMAIL_FROM` — np. `Growly <hello@twojadomena>` (domena zweryfikowana w Resend),
+   - `GROWLY_EMAIL_FROM` — np. `Growly <hello@getgrowly.pl>` (domena zweryfikowana w Resend),
    - `GROWLY_ALLOWED_ORIGINS` — (opcjonalnie) lista origin-ów LP po przecinku; brak = `*`,
    - `GROWLY_IP_SALT` — (opcjonalnie) sól do hashowania IP.
    - `SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY` są wstrzykiwane automatycznie.
