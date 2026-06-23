@@ -1,33 +1,113 @@
 /* =========================================================
    GROWLY — Landing Page interactions
-   Fake-door flow + marketing loops + analytics stubs
+   Fake-door flow + marketing loops + server-side analytics (B-160)
    ========================================================= */
 (function () {
   'use strict';
 
-  /* ---------- Analytics stub ----------
-     Podpina się pod dataLayer (GTM) / window.gtag jeśli istnieje,
-     a zawsze loguje do konsoli. Eventy zgodne z backlogiem G-004. */
-  function track(event, payload) {
-    var data = Object.assign({ event: event, ts: Date.now() }, payload || {});
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push(data);
-    if (typeof window.gtag === 'function') window.gtag('event', event, payload || {});
-    console.log('[growly:analytics]', event, payload || {});
-  }
+  var SUPABASE_FUNCTIONS =
+    'https://xxlnwijfmuwahvtvkxge.supabase.co/functions/v1';
 
-  /* ---------- Config: Supabase Edge Function (zapis + mail powitalny Resend) ----------
-     Endpoint przyjmuje POST { email, reason, source, website(honeypot) }, zapisuje leada
-     do growly.leads i wysyła powitalny e-mail przez Resend. Sekrety zostają po stronie serwera.
-     Nadpisz w razie potrzeby: <script>window.GROWLY_SIGNUP_URL = '...'</script> przed script.js. */
   var SIGNUP_ENDPOINT = window.GROWLY_SIGNUP_URL ||
-    'https://xxlnwijfmuwahvtvkxge.supabase.co/functions/v1/growly-signup';
+    SUPABASE_FUNCTIONS + '/growly-signup';
+
+  var TRACK_ENDPOINT = window.GROWLY_TRACK_URL ||
+    SUPABASE_FUNCTIONS + '/growly-track';
+
+  var SERVER_EVENTS = {
+    lp_view: 1,
+    cta_click_starter_box: 1,
+    email_submitted: 1,
+    post_signup_question_answered: 1
+  };
 
   var WAITLIST_BASE = 120;
 
   /* ---------- Helpers ---------- */
   function $(sel, ctx) { return (ctx || document).querySelector(sel); }
   function $all(sel, ctx) { return Array.prototype.slice.call((ctx || document).querySelectorAll(sel)); }
+
+  function uuid() {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0;
+      var v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  function getVisitorId() {
+    var key = 'growly_visitor_id';
+    var id = localStorage.getItem(key);
+    if (!id) {
+      id = uuid();
+      localStorage.setItem(key, id);
+    }
+    return id;
+  }
+
+  function getSessionId() {
+    var key = 'growly_session_id';
+    var id = sessionStorage.getItem(key);
+    if (!id) {
+      id = uuid();
+      sessionStorage.setItem(key, id);
+    }
+    return id;
+  }
+
+  function captureUtm() {
+    var key = 'growly_utm';
+    if (sessionStorage.getItem(key)) return;
+    var params = new URLSearchParams(window.location.search);
+    var utm = {
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      utm_term: params.get('utm_term') || '',
+      utm_content: params.get('utm_content') || '',
+      landing_path: window.location.pathname || '/'
+    };
+    sessionStorage.setItem(key, JSON.stringify(utm));
+  }
+
+  function getAttribution() {
+    captureUtm();
+    var utm = {};
+    try { utm = JSON.parse(sessionStorage.getItem('growly_utm') || '{}'); } catch (e) { utm = {}; }
+    return {
+      visitor_id: getVisitorId(),
+      session_id: getSessionId(),
+      utm_source: utm.utm_source || null,
+      utm_medium: utm.utm_medium || null,
+      utm_campaign: utm.utm_campaign || null,
+      utm_term: utm.utm_term || null,
+      utm_content: utm.utm_content || null,
+      landing_path: utm.landing_path || window.location.pathname || '/',
+      referrer: document.referrer || null
+    };
+  }
+
+  /* ---------- Analytics: server-side (B-160) + opcjonalny GTM/gtag ---------- */
+  function track(event, payload) {
+    var data = Object.assign({ event: event, ts: Date.now() }, payload || {});
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(data);
+    if (typeof window.gtag === 'function') window.gtag('event', event, payload || {});
+
+    if (!SERVER_EVENTS[event] || !TRACK_ENDPOINT) return;
+
+    var body = Object.assign({}, getAttribution(), payload || {}, { event: event });
+    var hp = $('#hpInput');
+    body.website = hp ? hp.value : '';
+
+    fetch(TRACK_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+      keepalive: true
+    }).catch(function () { /* analytics nie blokuje UX */ });
+  }
 
   function getFocusable(container) {
     return $all(
@@ -109,7 +189,6 @@
     sessionStorage.setItem('growly_exit_shown', '1');
     exitModal.classList.add('is-open');
     exitModal.setAttribute('aria-hidden', 'false');
-    track('exit_intent_shown', {});
   }
   function closeExit() {
     exitModal.classList.remove('is-open');
@@ -120,7 +199,6 @@
   document.addEventListener('click', function (e) {
     var opener = e.target.closest('.js-open-box');
     if (opener) {
-      // jeśli to przycisk z exit modala — zamknij exit najpierw
       if (opener.hasAttribute('data-close-exit')) closeExit();
       openBox(opener.getAttribute('data-source'));
       return;
@@ -154,7 +232,6 @@
       input.classList.remove('is-invalid');
       error.classList.remove('is-shown');
 
-      // zapis (fake-door / placeholder)
       persistLead({ email: email, source: lastSource });
       localStorage.setItem('growly_email', email);
       localStorage.setItem('growly_joined', '1');
@@ -163,7 +240,6 @@
       track('email_submitted', { source: lastSource });
       renderCounters();
 
-      // ustaw pozycję w kolejce (hook: zaangażowanie + referral)
       var pos = getWaitlistCount() + 1;
       var posEl = $('#queuePos');
       if (posEl) posEl.textContent = '#' + pos.toLocaleString('pl-PL');
@@ -182,14 +258,15 @@
       var picked = $('input[name="reason"]:checked', questionForm);
       var reason = picked ? picked.value : 'skipped';
       persistLead({ email: localStorage.getItem('growly_email'), reason: reason, source: lastSource });
-      track('post_signup_question_answered', { reason: reason });
+      track('post_signup_question_answered', { reason: reason, source: lastSource });
       showStep(3);
     });
   }
   var skipBtn = $('[data-skip-question]');
   if (skipBtn) {
     skipBtn.addEventListener('click', function () {
-      track('post_signup_question_answered', { reason: 'skipped' });
+      persistLead({ reason: 'skipped', source: lastSource });
+      track('post_signup_question_answered', { reason: 'skipped', source: lastSource });
       showStep(3);
     });
   }
@@ -204,7 +281,6 @@
     var btn = e.target.closest('[data-share]');
     if (!btn) return;
     var kind = btn.getAttribute('data-share');
-    track('referral_shared', { channel: kind });
 
     if (kind === 'wa') {
       window.open('https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + shareUrl), '_blank');
@@ -221,10 +297,9 @@
   });
 
   /* =========================================================
-     PERSIST LEAD (fake-door storage / optional endpoint)
+     PERSIST LEAD (Supabase Edge Function + lokalny fallback)
      ========================================================= */
   function persistLead(lead) {
-    // lokalny ślad (UX kolejki) — nawet gdy sieć zawiedzie
     try {
       var leads = JSON.parse(localStorage.getItem('growly_leads') || '[]');
       leads.push(Object.assign({ t: Date.now() }, lead));
@@ -233,12 +308,12 @@
 
     if (!SIGNUP_ENDPOINT) return Promise.resolve();
     var hp = $('#hpInput');
-    var payload = {
-      email: lead.email,
+    var payload = Object.assign({}, getAttribution(), {
+      email: lead.email || null,
       reason: lead.reason || null,
       source: lead.source || null,
-      website: hp ? hp.value : '' // honeypot
-    };
+      website: hp ? hp.value : ''
+    });
     return fetch(SIGNUP_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -258,12 +333,10 @@
     if (floatingCta) floatingCta.classList.toggle('is-visible', y > 700);
   }, { passive: true });
 
-  // Exit intent (desktop)
   document.addEventListener('mouseout', function (e) {
     if (!e.relatedTarget && e.clientY <= 0) openExit();
   });
 
-  // Announcement bar close
   var announce = $('#announce');
   var announceClose = $('#announceClose');
   if (sessionStorage.getItem('growly_announce_closed') === '1' && announce) {
@@ -295,6 +368,7 @@
   /* =========================================================
      INIT
      ========================================================= */
+  captureUtm();
   trapFocus(boxModal);
   trapFocus(exitModal);
   renderCounters();
