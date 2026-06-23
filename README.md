@@ -88,7 +88,18 @@ nie ma ich w tej statycznej stronie.
 
 ## Deploy
 
-Statyczny katalog — gotowy do hostingu (Vercel / Netlify / dowolny static host). W Vercel: ustaw katalog `growly/` jako root projektu (framework: „Other", bez buildu).
+Statyczny katalog — gotowy do hostingu (Vercel / Netlify / dowolny static host).
+
+**Repo:** https://github.com/tzardotcom/growly · **Prod:** https://getgrowly.pl
+
+**Vercel (osobne repo):**
+
+1. Projekt Vercel `growly` podpięty do tego repozytorium — **Root Directory puste** (root repo = strona).
+2. Framework: **Other**, bez buildu.
+3. Auto-deploy z `main` — każdy merge odświeża prod.
+4. Ręczny deploy: `vercel deploy --prod` z roota repo.
+
+**Backend signup** (Edge Function `growly-signup`, migracja `growly.leads`) pozostaje w monorepo `software-house`.
 
 ## Granice MVP (świadomie poza zakresem)
 
